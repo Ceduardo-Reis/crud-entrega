@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Bootcamp DDT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+            <div class="header">
+                <h2>Posto</h2>
+                <button onclick="openModal()" id="new">Criar Posto</i></button>
+            </div>    
+
+            <div class="divTable">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nome do posto</th>
+                      <th>Categoria</th>
+                      <th>Tipo de posto</th>
+                      <th>Prioridade</th>
+                      <th>Atuação</th>
+                      <th>Efetivo/Efetivo Estimado</th>
+                      <th class="editar"><img src="img2.png" alt="Editar" title="Editar"></th>
+                      <th class="escalar"><img src="img1.png" alt="Escalar" title="Escalar"></th>
+                      <th class="excluir"><img src="lixo.png" alt="Excluir" title="Excluir"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="postoTableBody">
+                  </tbody>
+                </table>
+            </div> 
+          
+
+              <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 id="modalTitle">Criar Posto</h2>
+                <form id="postoForm">
+                <input type="hidden" id="postoId">
+
+                <div>
+                    <label for="nome">Nome do posto:</label>
+                    <input type="text" id="nome" name="nome">
+                </div>
+
+                <div>
+                    <label for="categoria">Categoria:</label>
+                    <input type="text" id="categoria" name="categoria"> 
+                </div>
+                
+                <div>
+                    <label for="tipo">Tipo de posto:</label>
+                    <input type="text" id="tipo" name="tipo">
+                </div>    
+
+                <div>
+                    <label for="prioridade">Prioridade:</label>
+                    <input type="text" id="prioridade" name="prioridade">
+                </div>
+
+                <div>
+                    <label for="atuacao">Atuação:</label>
+                    <input type="text" id="atuacao" name="atuacao">
+                </div>
+
+                <div>
+                    <label for="efetivo">Efetivo/Efetivo Estimado:</label>
+                    <input type="text" id="efetivo" name="efetivo">
+                </div>
+
+                    <button type="button" onclick="savePosto()">Salvar</button>
+            </form>
+        </div>
+    </div>
+
+            <script>
+                let postos = [];
+                let editingPostoIndex = -1;
+        
+                function openModal(index = -1) {
+                    document.getElementById('postoForm').reset();
+                    editingPostoIndex = index;
+                    if (index >= 0) {
+                        document.getElementById('modalTitle').innerText = "Editar Posto";
+                        const posto = postos[index];
+                        document.getElementById('postoId').value = posto.id;
+                        document.getElementById('nome').value = posto.nome;
+                        document.getElementById('categoria').value = posto.categoria;
+                        document.getElementById('tipo').value = posto.tipo;
+                        document.getElementById('prioridade').value = posto.prioridade;
+                        document.getElementById('atuacao').value = posto.atuacao;
+                        document.getElementById('efetivo').value = posto.efetivo;
+                    } else {
+                        document.getElementById('modalTitle').innerText = "Criar Posto";
+                    }
+                    document.getElementById('myModal').style.display = "block";
+                }
+        
+                function closeModal() {
+                    document.getElementById('myModal').style.display = "none";
+                }
+        
+                function savePosto() {
+                    const id = document.getElementById('postoId').value;
+                    const nome = document.getElementById('nome').value;
+                    const categoria = document.getElementById('categoria').value;
+                    const tipo = document.getElementById('tipo').value;
+                    const prioridade = document.getElementById('prioridade').value;
+                    const atuacao = document.getElementById('atuacao').value;
+                    const efetivo = document.getElementById('efetivo').value;
+        
+                    const posto = { id, nome, categoria, tipo, prioridade, atuacao, efetivo };
+        
+                    if (editingPostoIndex >= 0) {
+                        postos[editingPostoIndex] = posto;
+                        editingPostoIndex = -1;
+                    } else {
+                        posto.id = postos.length + 1;
+                        postos.push(posto);
+                    }
+                    closeModal();
+                    renderTable();
+                }
+               //SELECT LISTAGEM
+                function renderTable() {
+                    const tbody = document.getElementById('postoTableBody');
+                    tbody.innerHTML = '';
+                    postos.forEach((posto, index) => {
+                        const row = `<tr>
+                            <td>${posto.id}</td>
+                            <td>${posto.nome}</td>
+                            <td>${posto.categoria}</td>
+                            <td>${posto.tipo}</td>
+                            <td>${posto.prioridade}</td>
+                            <td>${posto.atuacao}</td>
+                            <td>${posto.efetivo}</td>
+                            <td class="editar"><button onclick="openModal(${index})"><img src="img2.png" alt="Editar"></button></td>
+                            <td class="escalar"><button><img src="img1.png" alt="Escalar"></button></td>
+                            <td class="excluir"><button onclick="deletePosto(${index})"><img src="lixo.png" alt="Excluir"></button></td>
+                        </tr>`;
+                        tbody.innerHTML += row;
+                    });
+                }
+        
+                function deletePosto(index) {
+                    postos.splice(index, 1);
+                    renderTable();
+                }
+        
+                window.onclick = function(event) {
+                    const modal = document.getElementById('myModal');
+                    if (event.target == modal) {
+                        closeModal();
+                    }
+                }
+            </script>
+            
+        </body>
+        </html>
+            
+            
