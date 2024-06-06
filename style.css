@@ -84,3 +84,18 @@ th {
     display: flex;
     justify-content: space-around;
 }
+
+  @media (max-width: 600px) {
+            form div {
+                display: flex;
+                flex-direction: column;
+            }
+
+            table, th, td {
+                font-size: 14px;
+            }
+
+            button {
+                padding: 8px 12px;
+            }
+        }
