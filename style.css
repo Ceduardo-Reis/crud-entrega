@@ -85,17 +85,74 @@ th {
     justify-content: space-around;
 }
 
-  @media (max-width: 600px) {
-            form div {
-                display: flex;
-                flex-direction: column;
-            }
+* Responsividade celular */
+@media (max-width: 450px) {
+             
+          form div, .container, h1, .divTable, th, td, table {
+              display: flex;
+              flex-direction: column;
+                   
+          }
 
-            table, th, td {
-                font-size: 14px;
-            }
+          table, th, td {
+              font-size: 14px;
+          }
 
-            button {
-                padding: 8px 12px;
-            }
+          button {
+              padding: 8px 12px;
+          }
+      }
+
+      /* tablet */
+      @media (min-width: 768px) and (max-width: 1024px) {
+           
+        form div, .container, h1, .divTable, th, td, table {
+            display: flex;
+            flex-direction: column;
         }
+
+        table, th, td {
+            font-size: 14px;
+        }
+
+        button {
+            padding: 8px 12px;
+        }
+    }     
+
+
+ /* orientação horizontal */
+@media (orientation: landscape) {
+    form div {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    h1 {
+        text-align: center;
+    }
+    
+    .divTable {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    table {
+        width: 100%;
+    }
+    
+    th, td {
+        font-size: 14px;
+        text-align: left;
+    }
+    
+    button {
+        padding: 8px 12px;
+    }
+}
+
